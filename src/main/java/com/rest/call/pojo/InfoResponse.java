@@ -8,9 +8,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class InfoResponse {
+	public String _id;
 	public String name;
 	public String email;
-	public String city;
-	public Date currentDate;
-	public String id;
+	public String phone;
+	public String picture;
+	public String salary;
+	public String position;
+	public int __v;
+	public Date createdAt;
 }

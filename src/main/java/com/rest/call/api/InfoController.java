@@ -25,7 +25,7 @@ public class InfoController {
 	}
 	
 	@GetMapping("/infoRest/{id}") 
-	public InfoResponse oneRecord(@PathVariable int id) { 
+	public InfoResponse oneRecord(@PathVariable String id) { 
 	    return infoService.oneRecord(id); 
 	}
 
@@ -36,7 +36,7 @@ public class InfoController {
 	}
 	
 	@GetMapping("/infoWebMono/{id}") 
-	public Mono<InfoResponse> oneRecordByMono(@PathVariable int id) { 
+	public Mono<InfoResponse> oneRecordByMono(@PathVariable String id) { 
 	    return infoService.oneRecordByMono(id); 
 	}
 

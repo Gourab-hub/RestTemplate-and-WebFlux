@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,28 +23,28 @@ public class InfoService {
 	@Autowired
     private WebClient webClient;
 
-	// https://mockapi.io/ used
-	String url = "https://67cd5a6fdd7651e464ee213d.mockapi.io/info/api/v1/Profile";
+	@Value("${external.api.url}")
+	private String apiUrl;
 
 	public List<InfoResponse> fetchAllRecords() {
-		InfoResponse[] infoArray = restTemplate.getForObject(url, InfoResponse[].class);
+		InfoResponse[] infoArray = restTemplate.getForObject(apiUrl, InfoResponse[].class);
 		List<InfoResponse> infoList = Arrays.asList(infoArray);
 		return infoList;
 	}
 
-	public InfoResponse oneRecord(int id) {
+	public InfoResponse oneRecord(String id) {
 		RestTemplate restTemplate = new RestTemplate();
-		InfoResponse info = restTemplate.getForObject(url + "/" + id, InfoResponse.class);
+		InfoResponse info = restTemplate.getForObject(apiUrl + "/" + id, InfoResponse.class);
 		return info;
 	}
 
 	public Flux<InfoResponse> fetchAllRecordsByFlux() {
-		Flux<InfoResponse> bodyToFlux = webClient.get().uri("/Profile").retrieve().bodyToFlux(InfoResponse.class);
+		Flux<InfoResponse> bodyToFlux = webClient.get().uri("/").retrieve().bodyToFlux(InfoResponse.class);
 		return bodyToFlux;
 	}
 
-	public Mono<InfoResponse> oneRecordByMono(int id) {
-		Mono<InfoResponse> bodyToMono = webClient.get().uri("/Profile/{id}", id).retrieve().bodyToMono(InfoResponse.class);
+	public Mono<InfoResponse> oneRecordByMono(String id) {
+		Mono<InfoResponse> bodyToMono = webClient.get().uri("/{id}", id).retrieve().bodyToMono(InfoResponse.class);
 		return bodyToMono;
 	}
 }
