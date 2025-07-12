@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.util.CommonUtil;
 import com.rest.call.pojo.InfoResponse;
 import com.rest.call.service.InfoService;
 
@@ -26,7 +27,10 @@ public class InfoController {
 	
 	@GetMapping("/infoRest/{id}") 
 	public InfoResponse oneRecord(@PathVariable String id) { 
-	    return infoService.oneRecord(id); 
+		if(!CommonUtil.isNullOrBlank(id)) {
+		    return infoService.oneRecord(id); 
+		}
+		return null;
 	}
 
 	@GetMapping("/infoWebFlux")

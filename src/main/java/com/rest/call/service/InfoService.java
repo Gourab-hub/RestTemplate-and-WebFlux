@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.util.CommonUtil;
 import com.rest.call.pojo.InfoResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -27,6 +28,7 @@ public class InfoService {
 	private String apiUrl;
 
 	public List<InfoResponse> fetchAllRecords() {
+		CommonUtil.setAuditDetails(java.util.UUID.randomUUID().toString());
 		InfoResponse[] infoArray = restTemplate.getForObject(apiUrl, InfoResponse[].class);
 		List<InfoResponse> infoList = Arrays.asList(infoArray);
 		return infoList;
