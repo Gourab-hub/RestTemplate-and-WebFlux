@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.restInvocationUtil.RestServicecInvocationUtil;
 import com.example.util.CommonUtil;
 import com.rest.call.pojo.InfoResponse;
 import org.springframework.stereotype.Service;
@@ -22,14 +23,22 @@ public class InfoService {
 	private RestTemplate restTemplate;
 
 	@Autowired
-    private WebClient webClient;
+	private WebClient webClient;
 
 	@Value("${external.api.url}")
 	private String apiUrl;
+	
+	@Autowired
+	private RestServicecInvocationUtil restServicecInvocationUtil;
+
+	
 
 	public List<InfoResponse> fetchAllRecords() {
 		CommonUtil.setAuditDetails(java.util.UUID.randomUUID().toString());
-		InfoResponse[] infoArray = restTemplate.getForObject(apiUrl, InfoResponse[].class);
+//		InfoResponse[] infoArray = restTemplate.getForObject(apiUrl, InfoResponse[].class);
+//		List<InfoResponse> infoList = Arrays.asList(infoArray);
+
+		InfoResponse[] infoArray = restServicecInvocationUtil.getData(apiUrl, InfoResponse[].class);
 		List<InfoResponse> infoList = Arrays.asList(infoArray);
 		return infoList;
 	}
